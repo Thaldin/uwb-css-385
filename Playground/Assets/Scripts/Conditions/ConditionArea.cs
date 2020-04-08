@@ -16,6 +16,7 @@ public class ConditionArea : ConditionBase
 	//the type of event to check for
 	[Header("Type of Event")]
 	public ColliderEventTypes eventType = ColliderEventTypes.Enter;
+	public bool Triggered = false;
 
 
 
@@ -48,6 +49,7 @@ public class ConditionArea : ConditionBase
 			if(otherCollider.CompareTag(filterTag)
 				|| !filterByTag)
 			{
+				Triggered = true;
 				ExecuteAllActions(otherCollider.gameObject);
 			}
 		}
@@ -62,7 +64,7 @@ public class ConditionArea : ConditionBase
 		if(eventType == ColliderEventTypes.StayInside
 			&& Time.time >= lastTimeTriggerStayCalled + frequency) //check also the frequency
 		{
-			
+			Triggered = true;
 			//check for the tag of the object which entered the area, if necessary
 			if(otherCollider.CompareTag(filterTag)
 				|| !filterByTag)
@@ -86,6 +88,7 @@ public class ConditionArea : ConditionBase
 			if(otherCollider.CompareTag(filterTag)
 				|| !filterByTag)
 			{
+				Triggered = false;
 				ExecuteAllActions(otherCollider.gameObject);
 			}
 		}
