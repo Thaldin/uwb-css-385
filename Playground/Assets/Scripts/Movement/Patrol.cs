@@ -18,6 +18,7 @@ public class Patrol : Physics2DObject
 
 	private Vector2[] newWaypoints;
 	private int currentTargetIndex;
+	private float lastDistance = -1f;
 
 	void Start ()
 	{
@@ -48,16 +49,23 @@ public class Patrol : Physics2DObject
 
 		rigidbody2D.MovePosition(transform.position + ((Vector3)currentTarget - transform.position).normalized * speed * Time.fixedDeltaTime);
 
-		if(Vector2.Distance(transform.position, currentTarget) <= .1f)
+		if (Vector2.Distance(transform.position, currentTarget) <= .1f)
 		{
 			//new waypoint has been reached
-			currentTargetIndex = (currentTargetIndex<newWaypoints.Length-1) ? currentTargetIndex +1 : 0;
-			if(orientToDirection)
+			currentTargetIndex = (currentTargetIndex < newWaypoints.Length - 1) ? currentTargetIndex + 1 : 0;
+			if (orientToDirection)
 			{
 				currentTarget = newWaypoints[currentTargetIndex];
 				Utils.SetAxisTowards(lookAxis, transform, ((Vector3)currentTarget - transform.position).normalized);
 			}
 		}
+	}
+
+	public void SwitchWaypoint()
+	{
+		Debug.Log("Current WP: " + currentTargetIndex);
+		currentTargetIndex = (currentTargetIndex < newWaypoints.Length - 1) ? currentTargetIndex + 1 : 1;
+		Debug.Log("New WP: " + currentTargetIndex);
 	}
 
 	public void Reset()

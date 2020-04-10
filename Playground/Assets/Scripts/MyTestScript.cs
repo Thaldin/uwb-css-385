@@ -1,27 +1,27 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
-//This script has been suggested by Bryan Livingston (@BryanLivingston). Thanks Bryan!
-
-[AddComponentMenu("Playground/Movement/Wander")]
 [RequireComponent(typeof(Rigidbody2D))]
-public class Wander : Physics2DObject
+public class MyTestScript : MonoBehaviour
 {
 	[Header("Movement")]
 	public float speed = 1f;
 	public float directionChangeInterval = 3f;
 	public bool keepNearStartingPoint = true;
-
+	public float minSpeed = 1f;
+	public float maxSpeed = 1f;
+	public bool randomSpeed = false;
 
 	[Header("Orientation")]
-	public bool orientToDirection = false;
+	
+	public bool orientToDirection = false; // Text
 	// The direction that the GameObject will be oriented to
 	public Enums.Directions lookAxis = Enums.Directions.Up;
 
 	private Vector2 direction;
 	private Vector3 startingPoint;
 
-
+	// Start is called before the first frame update
 	// Start is called at the beginning of the game
 	private void Start()
 	{
@@ -30,7 +30,7 @@ public class Wander : Physics2DObject
 		{
 			directionChangeInterval = 0.1f;
 		}
-			
+
 		// we note down the initial position of the GameObject in case it has to hover around that (see keepNearStartingPoint)
 		startingPoint = transform.position;
 
@@ -40,24 +40,30 @@ public class Wander : Physics2DObject
 	// Calculates a new direction
 	private IEnumerator ChangeDirection()
 	{
-		while(true)
+		while (true)
 		{
 			direction = Random.insideUnitCircle; //change the direction the player is going
+
+			if (randomSpeed)
+			{
+				speed = Random.Range(minSpeed, maxSpeed);
+			}
 
 			// if we need to keep near the starting point...
 			if (keepNearStartingPoint)
 			{
 				// we measure the distance from it...
 				float distanceFromStart = Vector2.Distance(startingPoint, transform.position);
-				if(distanceFromStart > 1f + (speed * 0.1f)) // and if it's too much...
+				if (distanceFromStart > 1f + (speed * 0.1f)) // and if it's too much...
 				{
 					//... we get a direction that points back to the starting point
 					direction = (startingPoint - transform.position).normalized;
 				}
 			}
 
+
 			//if the object has to look in the direction of movement
-			if(orientToDirection)
+			if (orientToDirection)
 			{
 				Utils.SetAxisTowards(lookAxis, transform, direction);
 			}
@@ -73,6 +79,7 @@ public class Wander : Physics2DObject
 	// FixedUpdate is called every frame when the physics are calculated
 	private void FixedUpdate()
 	{
-		rigidbody2D.AddForce(direction * speed);
+		GetComponent<Rigidbody2D>().AddForce(direction * speed);
+		//rigidbody2D.AddForce(direction * speed);
 	}
 }
