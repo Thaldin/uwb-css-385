@@ -16,10 +16,11 @@ public class ConditionCollision : ConditionBase
 	// This function will be called when something touches the trigger collider
 	void OnCollisionEnter2D(Collision2D collision)
 	{
+		Debug.Log($"Collision: {collision.collider.name}");
 		if(collision.collider.CompareTag(filterTag)
 			|| !filterByTag)
 		{
-			ExecuteAllActions(collision.gameObject);
+			ExecuteAllActions(this.gameObject);
 		}
 	}
 }

@@ -32,9 +32,10 @@ public class CollectableAttribute : MonoBehaviour
 		{
 			if(userInterface != null)
 			{
+				userInterface.GameWon();
 				// add one point
-				int playerId = (playerTag == "Player") ? 0 : 1;
-				userInterface.AddPoints(playerId, pointsWorth);
+				//int playerId = (playerTag == "Player") ? 0 : 1;
+				//userInterface.AddPoints(playerId, pointsWorth);
 			}
 
 			// then destroy this object
