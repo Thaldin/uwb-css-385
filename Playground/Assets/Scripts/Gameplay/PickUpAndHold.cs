@@ -19,6 +19,7 @@ public class PickUpAndHold : MonoBehaviour
 		if(Input.GetKeyDown(pickupKey)
 			&& carriedObject == null)
 		{
+			Debug.Log("Attemping pickup...");
 			//Nothing in hand, we check if something is around and pick it up.
 			justPickedUpSomething = PickUp();
 			//Debug.Log("Pickup");
@@ -41,6 +42,7 @@ public class PickUpAndHold : MonoBehaviour
 		{
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 			rb2d.velocity = Vector2.zero;
+			rb2d.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
 		}
 		//unparenting
 		carriedObject.parent = null;
@@ -53,10 +55,12 @@ public class PickUpAndHold : MonoBehaviour
 		//Collect every Pickup around
 		GameObject[] pickups = GameObject.FindGameObjectsWithTag("Pickup");
 
+		Debug.Log($"Pickup Count: {pickups.Length}");
 		// Find the closest
 		float dist = pickUpDistance;
 		for(int i = 0; i < pickups.Length; i++)
 		{
+
 			float newDist = (transform.position - pickups[i].transform.position).sqrMagnitude;
 			if(newDist  < dist)
 			{
@@ -85,6 +89,8 @@ public class PickUpAndHold : MonoBehaviour
 			if(rb2d != null)
 			{
 				rb2d.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+				rb2d.velocity = Vector2.zero;
+				rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 			}
 			return true;
 		}

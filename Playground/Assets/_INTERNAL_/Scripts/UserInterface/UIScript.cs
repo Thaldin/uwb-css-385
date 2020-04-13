@@ -52,7 +52,10 @@ public class UIScript : MonoBehaviour
 			else
 			{
 				// Show the 2-player life interface
-				rightLabel.text = leftLabel.text = "Life";
+				var player1 = GameObject.FindGameObjectWithTag("Player");
+				var player2 = GameObject.FindGameObjectWithTag("Player2");
+				rightLabel.text = player2.name + " Life";
+				leftLabel.text = player1.name + " Life";
 
 				// Life will be provided by the PlayerHealth components
 			}
