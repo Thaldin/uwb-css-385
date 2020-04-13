@@ -45,6 +45,15 @@ public class ObjectShooter : MonoBehaviour
 		if(Input.GetKey(keyToPress)
 		   && Time.time >= timeOfLastSpawn + creationRate)
 		{
+			if (gameObject.transform.rotation.y == 1)
+			{
+				shootDirection.x = -1;
+			}
+			else
+			{
+				shootDirection.x = 1;
+			}
+
 			Vector2 actualBulletDirection = (relativeToRotation) ? (Vector2)(Quaternion.Euler(0, 0, transform.eulerAngles.z) * shootDirection) : shootDirection;
 
 			GameObject newObject = Instantiate<GameObject>(prefabToSpawn);
