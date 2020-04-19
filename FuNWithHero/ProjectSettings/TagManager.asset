@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Egg
   - UI
+  - ShotBar
   layers:
   - Default
   - TransparentFX

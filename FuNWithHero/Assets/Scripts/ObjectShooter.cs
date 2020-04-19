@@ -31,13 +31,23 @@ public class ObjectShooter : MonoBehaviour
     void Start()
     {
         lastShot -= fireRate;
-        //ui = GameObject.FindObjectOfType<UserInterface>();
-        //ui.SetPercentage(0);
+        ui = GameObject.FindObjectOfType<UserInterface>();
+        ui.SetPercentage(0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Time.time - lastShot < fireRate)
+        {
+            var timeLeft = fireRate - (Time.time - lastShot);
+            ui.SetPercentage(timeLeft / fireRate * 100);
+        }
+        else
+        {
+            ui.SetPercentage(0);
+        }
+
         if (Input.GetKey(keyToPress) && (Time.time - lastShot >= fireRate))
         {
             Vector2 actualEggDirection = Quaternion.Euler(0, 0, transform.eulerAngles.z) * shotDirection;
@@ -54,7 +64,7 @@ public class ObjectShooter : MonoBehaviour
             {
                 rigidbody2D.AddForce(actualEggDirection * speed, ForceMode2D.Impulse);
             }
-            //ui.SetPercentage(100f);
+            ui.SetPercentage(100f);
             lastShot = Time.time;
         }
     }
