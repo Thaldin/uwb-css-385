@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
@@ -43,6 +44,11 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.P))
         {
             speed = 0f;
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            SceneManager.LoadScene("TitleScreen");
         }
     }
 
