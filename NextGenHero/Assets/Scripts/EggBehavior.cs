@@ -2,22 +2,11 @@
 
 public class EggBehavior : MonoBehaviour
 {
-    public float eggLifeInSeconds = 1.0f;
-
     private UserInterface ui;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Can't be a negative lifetime
-        if (eggLifeInSeconds < 0f)
-        {
-            eggLifeInSeconds = 1.0f;
-        }
-
-        // We want to destroy the egg after the specified time.
-        Destroy(this.gameObject, eggLifeInSeconds);
-
         ui = FindObjectOfType<UserInterface>();
         ui.EggCountInc();
     }
