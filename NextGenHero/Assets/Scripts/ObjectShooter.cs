@@ -11,9 +11,6 @@ public class ObjectShooter : MonoBehaviour
     [Tooltip("Projectile Speed")]
     public float speed = 40f;
 
-    [Tooltip("Lifetime of projectile in seconds")]
-    public float projectileLifeTime = 1.0f;
-
     [Header("Other Information")]
     public KeyCode keyToPress = KeyCode.Space;
 
@@ -56,7 +53,6 @@ public class ObjectShooter : MonoBehaviour
             newObject.transform.position = this.transform.position;
             newObject.transform.eulerAngles = new Vector3(0f, 0f, Angle(actualEggDirection));
             newObject.tag = "Egg";
-            newObject.GetComponent<EggBehavior>().eggLifeInSeconds = projectileLifeTime;
 
             // push the created objects, but only if they have a Rigidbody2D
             Rigidbody2D rigidbody2D = newObject.GetComponent<Rigidbody2D>();
