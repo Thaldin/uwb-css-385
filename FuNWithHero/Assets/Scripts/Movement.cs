@@ -62,6 +62,6 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb2d.MovePosition(rb2d.position + (Vector2)(player.transform.TransformDirection(Vector3.up) * speed) * Time.deltaTime);
+        rb2d.MovePosition(rb2d.position + (Vector2)(player.transform.TransformDirection(Vector3.up) * speed) * Time.fixedDeltaTime);
     }
 }
